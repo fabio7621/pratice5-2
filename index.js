@@ -25,6 +25,23 @@ const userModal = {
   },
 };
 
+const { defineRule, Form, Field, ErrorMessage, configure } = VeeValidate;
+const { required, email, min, max } = VeeValidateRules;
+const { localize, loadLocaleFromURL } = VeeValidateI18n;
+
+defineRule("required", required);
+defineRule("email", email);
+defineRule("min", min);
+defineRule("max", max);
+
+loadLocaleFromURL(
+  "https://unpkg.com/@vee-validate/i18n@4.1.0/dist/locale/zh_TW.json"
+);
+
+configure({
+  generateMessage: localize("zh_TW"),
+});
+
 const apiUrl = "https://vue3-course-api.hexschool.io/v2";
 const apiPath = "fabio20";
 
@@ -40,10 +57,22 @@ const app = Vue.createApp({
         cartQtyLoading: "",
       },
       carts: {},
+      form: {
+        user: {
+          name: "",
+          email: "",
+          tel: "",
+          address: "",
+        },
+        message: "",
+      },
     };
   },
   components: {
     userModal,
+    VForm: Form,
+    VField: Field,
+    ErrorMessage: ErrorMessage,
   },
   methods: {
     getProducts() {
@@ -133,6 +162,20 @@ const app = Vue.createApp({
         })
         .catch((err) => {
           alert(err.res.data.message);
+        });
+    },
+    seedOrder() {
+      const url = `${apiUrl}/api/${apiPath}/order`;
+      const order = this.form;
+      axios
+        .post(url, { data: order })
+        .then((res) => {
+          alert(res.data.message);
+          this.$refs.form.resetForm();
+          alert("成功送出");
+        })
+        .catch((err) => {
+          alert("送出失敗");
         });
     },
   },
