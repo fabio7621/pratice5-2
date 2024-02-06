@@ -37,6 +37,7 @@ const app = Vue.createApp({
       //狀態管理
       status: {
         addCartLoading: "",
+        cartQtyLoading: "",
       },
       carts: {},
     };
@@ -90,6 +91,48 @@ const app = Vue.createApp({
         })
         .catch((err) => {
           alert(err.response.data.message);
+        });
+    },
+    updateCart(item, qty = 1) {
+      const url = `${apiUrl}/api/${apiPath}/cart/${item.id}`;
+      const orderCart = {
+        product_id: item.product_id,
+        qty,
+      };
+      this.status.cartQtyLoading = item.id;
+      //loading
+      axios
+        .put(url, { data: orderCart })
+        .then((res) => {
+          this.status.cartQtyLoading = "";
+          this.getCart();
+        })
+        .catch((err) => {
+          alert(err.res.data.message);
+        });
+    },
+    delCartItem(id) {
+      const url = `${apiUrl}/api/${apiPath}/cart/${id}`;
+      this.status.cartQtyLoading = id;
+      axios
+        .delete(url)
+        .then((res) => {
+          this.status.cartQtyLoading = "";
+          this.getCart();
+        })
+        .catch((err) => {
+          alert(err.res.data.message);
+        });
+    },
+    delCartAll() {
+      const url = `${apiUrl}/api/${apiPath}/carts`;
+      axios
+        .delete(url)
+        .then((res) => {
+          this.getCart();
+        })
+        .catch((err) => {
+          alert(err.res.data.message);
         });
     },
   },
