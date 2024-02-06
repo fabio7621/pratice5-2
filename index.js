@@ -173,6 +173,7 @@ const app = Vue.createApp({
           alert(res.data.message);
           this.$refs.form.resetForm();
           alert("成功送出");
+          this.getCart();
         })
         .catch((err) => {
           alert("送出失敗");
