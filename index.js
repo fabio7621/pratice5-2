@@ -52,6 +52,7 @@ const app = Vue.createApp({
       cart: {},
       tempProduct: {},
       //狀態管理
+      isLoading: true,
       status: {
         addCartLoading: "",
         cartQtyLoading: "",
@@ -183,7 +184,10 @@ const app = Vue.createApp({
   mounted() {
     this.getProducts();
     this.getCart();
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 1000);
   },
 });
-
+app.component("loading", VueLoading.Component);
 app.mount("#app");

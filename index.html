@@ -263,6 +263,7 @@
           </v-form>
         </div>
       </div>
+      <loading v-model:active="isLoading" />
     </div>
     <script type="text/x-template" id="userProductModal">
       <div class="modal fade" id="productModal" tabindex="-1" role="dialog"
@@ -327,5 +328,14 @@
     <script src="https://unpkg.com/vee-validate@next"></script>
     <script src="https://unpkg.com/@vee-validate/i18n@4.1.0"></script>
     <script src="https://unpkg.com/@vee-validate/rules"></script>
+    <script src="
+    https://cdn.jsdelivr.net/npm/vue-loading-overlay@6.0.3/dist/index.min.js
+    "></script>
+    <link
+      href="
+    https://cdn.jsdelivr.net/npm/vue-loading-overlay@6.0.3/dist/css/index.min.css
+    "
+      rel="stylesheet"
+    />
   </body>
 </html>
